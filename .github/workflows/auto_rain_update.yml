@@ -43,7 +43,7 @@ jobs:
         run: |
           git config --global user.name "RIO 9 GIS Cloud Bot"
           git config --global user.email "rio9-bot@rid.go.th"
-          git add eastern_rain.db dashboard.html executive_report.html index.html
+          git add eastern_rain.db dashboard.html index.html
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "🤖 [Auto-Update] อัปเดตข้อมูลพยากรณ์ฝน 9 วัน ภาคตะวันออก"
             git push
