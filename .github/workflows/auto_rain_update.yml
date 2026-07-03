@@ -13,6 +13,8 @@ permissions:
 jobs:
   update-rain-forecast:
     runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Bangkok
 
     steps:
       - name: 📥 Checkout Repository
