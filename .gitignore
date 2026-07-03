@@ -1,0 +1,14 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Sensitive API Tokens
+Token_TMD.txt
+
+# OS / Drive / Temp files
+.DS_Store
+Thumbs.db
+desktop.ini
+~*
+EX Data/~*
