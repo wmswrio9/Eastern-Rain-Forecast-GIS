@@ -48,7 +48,8 @@ jobs:
           git add eastern_rain.db dashboard.html index.html
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "🤖 [Auto-Update] อัปเดตข้อมูลพยากรณ์ฝน 9 วัน ภาคตะวันออก"
-            git push
+            git pull --rebase origin main
+            git push origin main
           else
             echo "::notice::ไม่มีการเปลี่ยนแปลงข้อมูลใหม่ในรอบนี้ (No changes to commit)"
           fi
