@@ -1,7 +1,8 @@
 import os
 import sqlite3
 import shapefile
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
+THAI_TZ = timezone(timedelta(hours=7))
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "eastern_rain.db")
 SHP_PATH = os.path.join(os.path.dirname(__file__), "Shapefile", "Amphoe", "Amphoe_Province_RIO9_WGS1984.shp")
@@ -169,7 +170,7 @@ def process_all():
 
     anchor_coords = {row[0]: (row[1], row[2]) for row in anchors_raw}
 
-    today_str = datetime.now().strftime("%Y-%m-%d")
+    today_str = datetime.now(THAI_TZ).strftime("%Y-%m-%d")
     cursor.execute("SELECT station_id, forecast_date, rain_mm FROM anchor_forecast_daily WHERE forecast_date >= ?", (today_str,))
     anchor_forecasts = cursor.fetchall()
     
@@ -187,7 +188,7 @@ def process_all():
     grid_points = cursor.fetchall()
     print(f"[*] เริ่มคำนวณ IDW Spatial Interpolation กระจายค่าฝนลงสู่จุดกริดทั้ง {len(grid_points)} จุด...")
 
-    now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    now_str = datetime.now(THAI_TZ).strftime("%Y-%m-%d %H:%M:%S")
 
     # คำนวณ IDW และสะสมข้อมูลเพื่อเฉลี่ยรายอำเภอ
     amphoe_summary_in = {}

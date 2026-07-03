@@ -4,7 +4,8 @@ import time
 import json
 import sqlite3
 import requests
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
+THAI_TZ = timezone(timedelta(hours=7))
 
 # ตั้งค่า encoding สำหรับ Windows console ให้รองรับ UTF-8
 if hasattr(sys.stdout, 'reconfigure'):
@@ -168,8 +169,8 @@ def fetch_and_save_data():
     cursor = conn.cursor()
 
     total_fetched_days = 0
-    now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    today_str = datetime.now().strftime("%Y-%m-%d")
+    now_str = datetime.now(THAI_TZ).strftime("%Y-%m-%d %H:%M:%S")
+    today_str = datetime.now(THAI_TZ).strftime("%Y-%m-%d")
 
     print("[*] เริ่มดึงข้อมูลสถานีหลัก (Anchor Stations 67 จุด) ปลอดภัยจากการถูกบล็อก API...")
     
@@ -189,8 +190,8 @@ def fetch_and_save_data():
             skip_fetch = False
             if last_fetched and count_existing >= 8:
                 try:
-                    last_time = datetime.strptime(last_fetched, "%Y-%m-%d %H:%M:%S")
-                    hours_diff = (datetime.now() - last_time).total_seconds() / 3600.0
+                    last_time = datetime.strptime(last_fetched, "%Y-%m-%d %H:%M:%S").replace(tzinfo=THAI_TZ)
+                    hours_diff = (datetime.now(THAI_TZ) - last_time).total_seconds() / 3600.0
                     if hours_diff < 4.0:
                         skip_fetch = True
                 except Exception:

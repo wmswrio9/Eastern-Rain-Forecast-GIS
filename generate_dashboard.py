@@ -2,7 +2,8 @@ import os
 import json
 import sqlite3
 import shapefile
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
+THAI_TZ = timezone(timedelta(hours=7))
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
@@ -125,7 +126,7 @@ def get_dashboard_data():
             provinces_dict[p_name] = []
         provinces_dict[p_name].append({"name": a_name, "lat": lat, "lon": lon})
         
-    today_str = datetime.now().strftime("%Y-%m-%d")
+    today_str = datetime.now(THAI_TZ).strftime("%Y-%m-%d")
     cursor.execute("SELECT DISTINCT forecast_date FROM spatial_amphoe_summary WHERE forecast_date >= ? ORDER BY forecast_date", (today_str,))
     dates = [row[0] for row in cursor.fetchall()]
     if not dates:
@@ -163,7 +164,7 @@ def get_dashboard_data():
 
     cursor.execute("SELECT MAX(fetched_at) FROM anchor_forecast_daily")
     row_fetch = cursor.fetchone()
-    raw_fetch_time = row_fetch[0] if row_fetch and row_fetch[0] else datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    raw_fetch_time = row_fetch[0] if row_fetch and row_fetch[0] else datetime.now(THAI_TZ).strftime("%Y-%m-%d %H:%M:%S")
     
     def get_model_cycle_thai(dt_str):
         try:
@@ -232,7 +233,7 @@ def get_dashboard_data():
         "summary": ordered_summary,
         "grid_points": grid_pts,
         "contours": contours,
-        "generated_at": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+        "generated_at": datetime.now(THAI_TZ).strftime("%d/%m/%Y %H:%M:%S"),
         "model_updated_at": model_time_str,
         "extreme_alerts": extreme_alerts
     }
