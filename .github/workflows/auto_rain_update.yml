@@ -1,0 +1,47 @@
+name: 🌧️ Automated Daily Rain Forecast Fetch & GIS Update (RIO 9)
+
+on:
+  schedule:
+    # รันอัตโนมัติทุกวันเวลา 07:45 น. และ 19:45 น. เวลาประเทศไทย (00:45 และ 12:45 UTC)
+    - cron: '45 0,12 * * *'
+  workflow_dispatch:
+    # อนุญาตให้กดสั่งรันเองผ่านปุ่ม Run workflow บนหน้า GitHub Actions ได้ทันที
+
+permissions:
+  contents: write
+
+jobs:
+  update-rain-forecast:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+            python-version: '3.11'
+            cache: 'pip'
+
+      - name: 📦 Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests numpy scipy
+
+      - name: 📡 Fetch Rain Forecast from TMD NWP API
+        env:
+          TMD_API_TOKEN: ${{ secrets.TMD_API_TOKEN }}
+        run: |
+          python fetch_eastern_rain.py
+
+      - name: 🗺️ Generate Interactive GIS Dashboard & Executive Report
+        run: |
+          python generate_dashboard.py
+
+      - name: 📤 Commit and Push Updated Dashboard to GitHub
+        run: |
+          git config --global user.name "RIO 9 GIS Cloud Bot"
+          git config --global user.email "rio9-bot@rid.go.th"
+          git add eastern_rain.db dashboard.html executive_report.html index.html
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 [Auto-Update] อัปเดตข้อมูลพยากรณ์ฝน 9 วัน ภาคตะวันออก ($(date +'%d/%m/%Y %H:%M'))" && git push)

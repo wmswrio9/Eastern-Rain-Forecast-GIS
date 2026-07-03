@@ -150,12 +150,13 @@ def init_database():
     conn.close()
 
 def fetch_and_save_data():
-    if not os.path.exists(TOKEN_PATH):
-        print(f"[!] ไม่พบไฟล์ Token: {TOKEN_PATH}")
-        return
-
-    with open(TOKEN_PATH, "r", encoding="utf-8") as f:
-        token = f.read().strip()
+    token = os.environ.get("TMD_API_TOKEN", "").strip()
+    if not token:
+        if not os.path.exists(TOKEN_PATH):
+            print(f"[!] ไม่พบไฟล์ Token: {TOKEN_PATH} และไม่พบตัวแปรระบบ TMD_API_TOKEN")
+            return
+        with open(TOKEN_PATH, "r", encoding="utf-8") as f:
+            token = f.read().strip()
 
     headers = {
         "Authorization": f"Bearer {token}",
