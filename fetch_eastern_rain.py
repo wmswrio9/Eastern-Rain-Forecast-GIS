@@ -178,16 +178,26 @@ def fetch_and_save_data():
         print(f"\n---> จังหวัด: {province} ({len(amphoes)} อำเภอ)")
         
         for amphoe in amphoes:
-            # เช็คว่าวันนี้ดึงของสถานีนี้สำเร็จครบแล้วหรือยัง
+            # เช็คเวลาที่ดึงข้อมูลล่าสุด หากดึงไปแล้วภายใน 4 ชั่วโมง ให้ข้าม (แต่หากเกิน 4 ชม. เช่นรอบเช้ามาสู่รอบค่ำ จะดึงใหม่เสมอ)
             cursor.execute("""
-            SELECT count(*) FROM anchor_stations s
+            SELECT MAX(f.fetched_at), count(*) FROM anchor_stations s
             JOIN anchor_forecast_daily f ON s.station_id = f.station_id
-            WHERE s.amphoe_name=? AND s.province_name=? AND f.fetched_at LIKE ?
-            """, (amphoe, province, f"{today_str}%"))
-            count_existing = cursor.fetchone()[0]
+            WHERE s.amphoe_name=? AND s.province_name=?
+            """, (amphoe, province))
+            last_fetched, count_existing = cursor.fetchone()
             
-            if count_existing >= 8:
-                print(f"  [.] {amphoe}: มีข้อมูลพยากรณ์ล่วงหน้า {count_existing} วันของวันนี้แล้ว (ข้ามเพื่อประหยัด API)")
+            skip_fetch = False
+            if last_fetched and count_existing >= 8:
+                try:
+                    last_time = datetime.strptime(last_fetched, "%Y-%m-%d %H:%M:%S")
+                    hours_diff = (datetime.now() - last_time).total_seconds() / 3600.0
+                    if hours_diff < 4.0:
+                        skip_fetch = True
+                except Exception:
+                    pass
+            
+            if skip_fetch:
+                print(f"  [.] {amphoe}: มีข้อมูลพยากรณ์ล่าสุดแล้ว (ดึงไปเมื่อ {hours_diff:.1f} ชม.ที่แล้ว) ข้ามเพื่อประหยัด API")
                 continue
 
             params = {
