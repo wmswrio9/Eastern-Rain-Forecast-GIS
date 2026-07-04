@@ -783,11 +783,11 @@ def generate_html(data, geojson_data, prov_geojson_data):
                 <div style="display:flex; gap:10px; align-items:center; margin-top:10px; flex-wrap:wrap;">
                     <span style="color:#475569; font-size:0.9rem; font-weight:500;">รูปแบบชั้นข้อมูลแผนที่:</span>
                     <div style="display:flex; background:#ffffff; border:1px solid var(--accent-cyan); border-radius:10px; overflow:hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
-                        <button type="button" class="layer-btn active" id="btnLayerAmphoe" onclick="switchMapLayer('amphoe')">🗺️ รายอำเภอ (Choropleth)</button>
-                        <button type="button" class="layer-btn" id="btnLayerProvince" onclick="switchMapLayer('province')">🌐 รายจังหวัด (Choropleth)</button>
-                        <button type="button" class="layer-btn" id="btnLayerSmooth" onclick="switchMapLayer('smooth')">🌈 เส้นชั้นน้ำฝน (Smooth Contour)</button>
-                        <button type="button" class="layer-btn" id="btnLayerIsohyet" onclick="switchMapLayer('isohyet')">📦 ตารางกริดฝน (Grid Cells)</button>
-                        <button type="button" class="layer-btn" id="btnLayerPoints" onclick="switchMapLayer('points')">📍 จุดกริดพยากรณ์ (3,762 จุด)</button>
+                        <button type="button" class="layer-btn active" id="btnLayerAmphoe" onclick="switchMapLayer('amphoe')">🗺️ อำเภอ</button>
+                        <button type="button" class="layer-btn" id="btnLayerProvince" onclick="switchMapLayer('province')">🌐 จังหวัด</button>
+                        <button type="button" class="layer-btn" id="btnLayerSmooth" onclick="switchMapLayer('smooth')">🌈 เส้นชั้นน้ำฝน</button>
+                        <button type="button" class="layer-btn" id="btnLayerIsohyet" onclick="switchMapLayer('isohyet')">📦 Grid</button>
+                        <button type="button" class="layer-btn" id="btnLayerPoints" style="display:none;" onclick="switchMapLayer('points')">📍 จุดกริดพยากรณ์ (3,762 จุด)</button>
                     </div>
                 </div>
             </div>
