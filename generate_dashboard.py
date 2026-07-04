@@ -248,6 +248,9 @@ def generate_html(data, geojson_data, prov_geojson_data):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>ระบบสารสนเทศภูมิศาสตร์พยากรณ์และวิเคราะห์ปริมาณฝนล่วงหน้า 9 วัน ภาคตะวันออก</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
