@@ -5,7 +5,6 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta http-equiv="refresh" content="0; url=dashboard.html">
     <title>กำลังเข้าสู่ระบบพยากรณ์ฝนภาคตะวันออก...</title>
     <style>
         body { font-family: 'Prompt', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f8fafc; color: #334155; }
@@ -13,6 +12,9 @@
 </head>
 <body>
     <p>⏳ กำลังนำท่านเข้าสู่ระบบพยากรณ์และวิเคราะห์ปริมาณฝนล่วงหน้า 9 วัน ภาคตะวันออก (สำนักงานชลประทานที่ 9)...</p>
-    <script>window.location.href = "dashboard.html";</script>
+    <script>
+        // ใช้ Date().getTime() เพื่อบังคับให้เบราว์เซอร์มือถือและคอมทุกเครื่องดึงหน้าเว็บใหม่ล่าสุดเสมอ ไม่ใช้ค่าที่จำไว้ (100% Cache Busting)
+        window.location.replace("dashboard.html?t=" + new Date().getTime());
+    </script>
 </body>
 </html>
