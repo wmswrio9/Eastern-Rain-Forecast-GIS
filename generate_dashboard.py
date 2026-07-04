@@ -724,6 +724,15 @@ def generate_html(data, geojson_data, prov_geojson_data):
             .search-input {{
                 width: 100% !important;
             }}
+            .province-label {{
+                font-size: 0.72rem !important;
+                padding: 1px 4px !important;
+                border-width: 1px !important;
+            }}
+            .amphoe-label {{
+                font-size: 0.60rem !important;
+                padding: 0px 2px !important;
+            }}
         }}
     </style>
 </head>
@@ -993,9 +1002,10 @@ def generate_html(data, geojson_data, prov_geojson_data):
         }}
 
         function initMap() {{
+            const isMobile = window.innerWidth <= 768;
             mapInstance = L.map('rainMap', {{
                 preferCanvas: true
-            }}).setView([13.4, 102.1], 8);
+            }}).setView(isMobile ? [12.9, 101.8] : [13.4, 102.1], isMobile ? 7.3 : 8);
 
             L.tileLayer('https://{{s}}.basemaps.cartocdn.com/light_all/{{z}}/{{x}}/{{y}}{{r}}.png', {{
                 attribution: '&copy; OpenStreetMap & CartoDB | TMD Forecast API',
