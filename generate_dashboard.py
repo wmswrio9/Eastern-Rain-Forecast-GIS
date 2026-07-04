@@ -659,7 +659,7 @@ def generate_html(data, geojson_data, prov_geojson_data):
             border: 1.5px solid #0284c7 !important;
             background: rgba(255, 255, 255, 0.93) !important;
             padding: 2px 7px !important;
-        }}
+        .leaflet-popup-content-wrapper {{
             border: 1px solid #cbd5e1;
             border-radius: 12px;
             padding: 6px;
@@ -667,6 +667,63 @@ def generate_html(data, geojson_data, prov_geojson_data):
         }}
         .leaflet-popup-tip {{
             background: #ffffff !important;
+        }}
+        @media (max-width: 768px) {{
+            body {{
+                padding: 10px !important;
+            }}
+            .main-header h1 {{
+                font-size: 1.35rem !important;
+                line-height: 1.4 !important;
+            }}
+            .main-header .subtitle {{
+                font-size: 0.85rem !important;
+            }}
+            .kpi-container {{
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
+            }}
+            .kpi-card {{
+                padding: 12px !important;
+            }}
+            .kpi-title {{
+                font-size: 0.8rem !important;
+            }}
+            .kpi-value {{
+                font-size: 1.3rem !important;
+            }}
+            .map-header, .table-header {{
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 12px !important;
+            }}
+            .layer-btn {{
+                font-size: 0.75rem !important;
+                padding: 6px 10px !important;
+            }}
+            #rainMap {{
+                height: 400px !important;
+            }}
+            .map-legend {{
+                font-size: 0.75rem !important;
+                gap: 8px !important;
+                padding: 8px !important;
+                justify-content: flex-start !important;
+            }}
+            .table-container {{
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+            }}
+            #dataTable {{
+                min-width: 680px !important;
+                font-size: 0.82rem !important;
+            }}
+            #dataTable th, #dataTable td {{
+                padding: 8px 6px !important;
+            }}
+            .search-input {{
+                width: 100% !important;
+            }}
         }}
     </style>
 </head>
