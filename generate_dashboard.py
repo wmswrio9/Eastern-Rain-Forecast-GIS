@@ -251,6 +251,17 @@ def generate_html(data, geojson_data, prov_geojson_data):
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <script>
+        // ระบบอัจฉริยะล้างความจำมือถือและคอมพิวเตอร์อัตโนมัติ (Self-Healing Cache Buster): หากเปิดเว็บโดยไม่มีรหัสเวลา หรือรหัสเวลาเก่าเกิน 5 นาที จะบังคับโหลดไฟล์ใหม่จากเซิร์ฟเวอร์ทันที
+        (function() {{
+            const params = new URLSearchParams(window.location.search);
+            const t = params.get('t');
+            const now = new Date().getTime();
+            if (!t || (now - parseInt(t)) > 300000) {{
+                window.location.replace(window.location.pathname + '?t=' + now);
+            }}
+        }})();
+    </script>
     <title>ระบบสารสนเทศภูมิศาสตร์พยากรณ์และวิเคราะห์ปริมาณฝนล่วงหน้า 9 วัน ภาคตะวันออก</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
