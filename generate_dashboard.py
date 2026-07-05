@@ -638,7 +638,7 @@ def generate_html(data, geojson_data, prov_geojson_data):
         }}
 
         tr:hover td {{
-            background: #f1f5f9 !important;
+            background: #cbd5e1 !important;
             color: #000000 !important;
         }}
 
