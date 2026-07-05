@@ -204,7 +204,7 @@ def fetch_and_save_data():
             params = {
                 "province": province,
                 "amphoe": amphoe,
-                "duration": 14,
+                "duration": 10,
                 "fields": "rain,cond"
             }
             
